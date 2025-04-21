@@ -167,8 +167,8 @@ step_6_jeedom_download() {
     echo "${RED}Cannot unpack archive - Cancelling${NORMAL}"
     exit 1
   fi
-   # Rename the folder from metrikx-master to core-master
-  mv /root/metrikx-master /root/core-master
+   # Rename the folder from metrikx-v1-main to core-master
+  mv /root/metrikx-v1-main /root/core-master
   cp -R /root/core-*/* ${WEBSERVER_HOME}
   cp -R /root/core-*/.[^.]* ${WEBSERVER_HOME}
   cp /root/core/.htaccess ${WEBSERVER_HOME}/.htaccess
