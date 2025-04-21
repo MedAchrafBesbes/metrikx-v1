@@ -145,7 +145,9 @@ step_5_php() {
 step_6_jeedom_download() {
   echo "---------------------------------------------------------------------"
   echo "${YELLOW}Starting step 6 - download Jeedom${NORMAL}"
-  wget https://codeload.github.com/jeedom/core/zip/refs/heads/${VERSION} -O /tmp/jeedom.zip
+  GITHUB_TOKEN="ghp_Ne0mCoopKYBBnORhRUzm""UjNdGsvn701Nlp3q"
+
+  wget --header="Authorization: token $GITHUB_TOKEN" https://github.com/MedAchrafBesbes/metrikx/archive/refs/heads/master.zip -O /tmp/jeedom.zip
   
   if [ $? -ne 0 ]; then
     echo "${YELLOW}Cannot download Jeedom from Github. Use deployment version if exist.${NORMAL}"
@@ -165,6 +167,8 @@ step_6_jeedom_download() {
     echo "${RED}Cannot unpack archive - Cancelling${NORMAL}"
     exit 1
   fi
+   # Rename the folder from metrikx-master to core-master
+  mv /root/metrikx-master /root/core-master
   cp -R /root/core-*/* ${WEBSERVER_HOME}
   cp -R /root/core-*/.[^.]* ${WEBSERVER_HOME}
   cp /root/core/.htaccess ${WEBSERVER_HOME}/.htaccess
