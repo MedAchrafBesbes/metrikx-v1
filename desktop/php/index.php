@@ -289,6 +289,44 @@ if (config::byKey('core::jqueryless') == 1) $loadJquery = false;
 	}
 	?>
 	<script src="3rdparty/snap.svg/snap.svg-min.js"></script>
+	<style>
+       
+
+	   .loader-container-metrikx {
+			  
+			   width: 120px;
+			   height: 120px;
+		   }
+   
+		   .loader-metrikx {
+			   width: 70px;
+			   height: 70px;
+			   background: url('data/custom/Metrikx/product_icon.png') no-repeat center;
+			   background-size: contain;
+			   position: absolute;
+			   top: 50%;
+			   left: 50%;
+			   transform: translate(-50%, -50%);
+		   }
+   
+		   .circle-metrikx {
+			   width: 130px;
+			   height: 130px;
+			   border: 5px solid rgba(255, 255, 255, 0.3);
+			   border-top: 5px solid RED;
+			   border-radius: 50%;
+			   position: absolute;
+			   top: 50%;
+			   left: 50%;
+			   transform: translate(-50%, -50%);
+			   animation: spin 1.5s linear infinite;
+		   }
+   
+		   @keyframes spin {
+			   0% { transform: translate(-50%, -50%) rotate(0deg); }
+			   100% { transform: translate(-50%, -50%) rotate(360deg); }
+		   }
+	   </style>
 </head>
 
 <body data-uimode="desktop">
@@ -298,7 +336,10 @@ if (config::byKey('core::jqueryless') == 1) $loadJquery = false;
 	</div>
 	<div id="div_jeedomLoading" style="display:none;">
 		<div class="loadingBack"></div>
-		<div class="loadingSpinner"></div>
+		<div class="loader-container-metrikx">
+        	<div class="circle-metrikx"></div>
+        	<div class="loader-metrikx"></div>
+    	</div>
 	</div>
 	<?php
 	if (!isConnect()) {

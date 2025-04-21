@@ -1,0 +1,195 @@
+/* Custom CSS Core 4.4.0 */
+body{
+  	background-image: none !important;
+    background-color: rgb(77, 77, 77) !important;
+    }
+    /* Login Page */
+    #bt_login_validate{
+    background : rgb(77, 77, 77)!important;
+    border-color: rgb(77, 77, 77)!important;
+    }
+  /* Login Page */
+    /* Dashboard */
+    /* Gestion des plugins */
+    #bt_addPluginFromOtherSource>.center>.fas{
+    color:white!important;
+    }
+    #bt_addPluginFromOtherSource>.txtColor{
+    color:white!important;
+    }
+    .displayStore>.center>.fas{
+    color:white!important;
+    }
+    .displayStore>.txtColor{
+    color:white!important;
+    }
+    
+    .pullInstall>.center>.fas{
+    color:white!important;
+    }
+    .pullInstall>.txtColor{
+    color:white!important;
+    }
+    #div_resumePluginList>legend{
+    color:white!important;
+    }
+    /* Gestion des plugins */
+    /* Objet */
+    #bt_addObject2>center>.fas{
+    color:white!important;
+    }
+    #bt_addObject2>.txtColor>center{
+    color:white!important;
+    }
+    #bt_addObject>span{
+      color:white!important;
+      }
+    #bt_showObjectSummary>div{
+    color:white!important;
+    }
+    #bt_showObjectSummary>span{
+    color:white!important;
+    }
+    
+    #div_resumeObjectList>legend{
+    color:white!important;
+    }
+    #scenarioThumbnailDisplay>center>span{
+    color:white!important;
+    }
+    /* Objet */
+    /* Scenario */
+    #bt_addScenario2>center>.fas{
+    color:white!important;
+    }
+    #bt_addScenario2>.txtColor>center{
+    color:white!important;
+    }
+    #bt_addScenario>center>.fas{
+      color:white!important;
+      }
+      #bt_addScenario>.txtColor{
+      color:white!important;
+      } 
+    #bt_regenerateInteract>div>.fas{
+    color:white!important;
+    }
+    #bt_regenerateInteract>.txtColor{
+    color:white!important;
+    }
+    
+    #bt_showScenarioSummary>div>.fas{
+    color:white!important;
+    }
+    #bt_showScenarioSummary>.txtColor{
+    color:white!important;
+    }
+    #scenarioThumbnailDisplay>center>span{
+    color:white!important;
+    }
+    #scenarioThumbnailDisplay>legend{
+    color:white!important;
+    }
+	#bt_clearAllLogs>.txtColor{
+      color:white!important;
+	}
+    /* Scenario */
+    /* Interaction */
+    #bt_addInteract2>center>.fas{
+    color:white!important;
+    }
+    #bt_addInteract2>.txtColor>center{
+    color:white!important;
+    }
+    #bt_addInteract>center>.fas{
+      color:white!important;
+      }
+      #bt_addInteract>.txtColor{
+      color:white!important;
+      }
+    #bt_changeAllScenarioState>.center>.fas{
+    color:white!important;
+    }
+    #bt_changeAllScenarioState>.txtColor{
+    color:white!important;
+    }
+    
+    #bt_testInteract>div>.fas{
+    color:white!important;
+    }
+    #bt_testInteract>.txtColor{
+    color:white!important;
+    }
+    #interactThumbnailDisplay>center>span{
+    color:white!important;
+    }
+    #interactThumbnailDisplay>legend{
+    color:white!important;
+    }
+    /* Interaction */
+    /* Widget */
+    #bt_addWidgets>center>.fas{
+    color:white!important;
+    }
+    #bt_addWidgets>.txtColor>center{
+    color:white!important;
+    }
+    
+    #bt_mainImportWidgets>center>span>.fas{
+    color:white!important;
+    }
+    #bt_mainImportWidgets>.txtColor>center{
+    color:white!important;
+    }
+    
+    #bt_editCode>center>.far{
+    color:white!important;
+    }
+    #bt_editCode>.txtColor>center{
+    color:white!important;
+    }
+    
+    #bt_replaceWidget>center>.fab{
+    color:white!important;
+    }
+    #bt_replaceWidget>.txtColor>center{
+    color:white!important;
+    }
+    #div_widgetsList>center>span{
+    color:white!important;
+    }
+    #div_widgetsList>legend{
+    color:white!important;
+    }
+    /* Widget */
+    /* Log */
+    .li_log>a{
+      color:white!important;
+    }
+    /* Log */
+    .logoSecondary{
+      color:white!important;
+      }
+      .logoSecondary>span{
+      color:white!important;
+      }
+      .logoPrimary{
+      color:white!important;
+      }
+      .logoPrimary>span{
+      color:white!important;
+      }
+      .eqLogicThumbnailDisplay>legend{
+        color:white!important;
+      }
+      .eqLogicThumbnailContainer>legend{
+         color:white!important;
+      }
+
+      #bt_returnToThumbnailDisplay {
+        color:white!important;
+      }
+
+      #div_confPlugin>legend{
+        color:white!important;
+      }
