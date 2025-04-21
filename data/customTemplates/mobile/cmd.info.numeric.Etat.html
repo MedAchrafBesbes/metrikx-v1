@@ -1,0 +1,153 @@
+<div class="cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="tile" data-cmd_id="#id#"
+  data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+
+  <div class="content-etat">
+  <div class="title #hide_name#">
+    <div class="cmdName" style="font-size: large;margin-bottom: 11px;">#name_display#</div>
+  </div>
+  <div class="">
+   
+      <ul class="state-list">
+          <!-- État 0 -->
+          <li class="state-item#uid#" data-state="0">
+              <span class="arrow-indicator">&#9654;</span>
+              <span class="icon fa fa-power-off fa-xs"></span>
+              Arrêt Inoccupation 
+          </li>
+          <!-- État 1 -->
+          <li class="state-item#uid# " data-state="1">
+              <span class="arrow-indicator">&#9654;</span>
+              <span class="icon fa fa-clock"></span>
+              Reserve 
+          </li>
+          <!-- État 2 -->
+          <li class="state-item#uid# " data-state="2">
+              <span class="arrow-indicator">&#9654;</span>
+              <span class="icon fa fa-wrench"></span>
+              Unité Arrêtée
+          </li>
+          <!-- État 3 -->
+          <li class="state-item#uid#" data-state="3">
+              <span class="arrow-indicator">&#9654;</span>
+              <span class="icon fa fa-signal"></span>
+              Arrêt à Distance (GTC)
+          </li>
+          <!-- État 4 -->
+          <li class="state-item#uid#" data-state="4">
+              <span class="arrow-indicator">&#9654;</span>
+              <span class="icon fa fa-plug"></span>
+              Délestage Unité 
+          </li>
+          <!-- État 5 -->
+          <li class="state-item#uid#" data-state="5">
+              <span class="arrow-indicator">&#9654;</span>
+              <span class="icon fa fa-fan"></span>
+              Post-Ventilation en Cours 
+          </li>
+          <!-- État 6 -->
+          <li class="state-item#uid#" data-state="6">
+              <span class="arrow-indicator">&#9654;</span>
+              <span class="icon fa fa-play"></span>
+              Unité en Fonctionnement 
+          </li>
+          <!-- État 7 -->
+          <li class="state-item#uid#" data-state="7">
+              <span class="arrow-indicator">&#9654;</span>
+              <span class="icon fa fa-exclamation-triangle"></span>
+              Arrêt d'Urgence Actif 
+          </li>
+          <!-- État 20 -->
+          <li class="state-item#uid#" data-state="20">
+              <span class="arrow-indicator">&#9654;</span>
+              <span class="icon fa fa-bell"></span>
+              Arrêt Alarme 
+          </li>
+      </ul>
+ 
+  </div>
+</div>
+  <div class="timeCmd label label-default #history#" data-type="info"></div>
+  <template>
+    <div>time : duration|date ({{Affiche durée ou date de la valeur}})</div>
+  </template>
+  <style>
+    .content-etat{
+      
+      background: linear-gradient(135deg, #fbfbfb 0%, #65666d 100%);
+    /* color: white; */
+    border-radius: 10px;
+    padding: 33px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+      
+    
+    .state-list {
+            list-style: none;
+            padding: 0;
+        }
+        .state-item#uid# {
+            position: relative;
+            padding: 4px 0;
+            margin: 10px 0;
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        .state-item#uid# .icon {
+          font-size: 15px;
+          margin-inline: 5PX;
+          color: #999;
+        }
+        .state-item#uid#.active {
+            background: #4caf50;
+            color: white;
+        }
+        .state-item#uid#.active .icon {
+            color: white;
+        }
+        .arrow-indicator {
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #4caf50;
+            display: none;
+        }
+        .state-item#uid#.active .arrow-indicator {
+            display: block;
+        }
+   
+  </style>
+  <script>
+    jeedom.cmd.addUpdateFunction('#id#', function (_options) {
+      
+      if (is_object(cmd = document.querySelector('.cmd[data-cmd_uid="#uid#"]'))) {
+        cmd.querySelector('.content-etat').setAttribute('title', '{{Date de valeur}}: ' + _options.valueDate + '<br>{{Date de collecte}}: ' + _options.collectDate)
+        if ('#time#' == 'duration' || '#time#' == 'date') {
+          jeedom.cmd.displayDuration(_options.valueDate, cmd.querySelector('.timeCmd'), '#time#')
+        }
+        
+
+        let activeState  = (parseFloat(_options.display_value).toFixed(1) - parseInt(_options.display_value)) === 0 ? parseInt(_options.display_value) : parseFloat(_options.display_value).toFixed(1);
+        
+            const activeCard = document.querySelector(`.state-item#uid#[data-state="${activeState}"]`);
+            if (activeCard) {
+                activeCard.classList.add('active');
+                const activeTitle = activeCard.querySelector('.state-title').textContent;
+                document.querySelector('#active-state span').textContent = activeTitle;
+                document.querySelector('#active-state').innerHTML += ` (Code: ${activeState})`;
+            }
+      
+
+      
+      }
+    })
+
+    jeedom.cmd.refreshValue([{ cmd_id: '#id#', value: '#value#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#' }])
+  </script>
+</div>

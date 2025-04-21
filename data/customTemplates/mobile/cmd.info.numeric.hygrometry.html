@@ -1,0 +1,128 @@
+<div class="Hygrometry-widget cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="tile" data-cmd_id="#id#"
+  data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+  
+  <div class="title #hide_name#">
+    <div class="cmdName"><i class="fa fa-droplet"></i> #name_display#</div>
+  </div>
+  <div class="content">
+    <div class="right">
+      <div class="circle-container">
+        <div class="circle" id="circle#id#" style="--humidity: 60%;">
+            <div class="circle-inner value">
+                <div class="humidity-value " id="humidity#id#">..%</div>
+            </div>
+        </div>
+    </div>
+      <div class="cmdStats #hide_history#">
+        <span title="{{Minimum}}" class="tooltips">Min : #minHistoryValue#</span>
+        <span title="{{Moyenne}}" class="tooltips">Moy : #averageHistoryValue#</span>
+        <span title="{{Maximum}}" class="tooltips">Max : #maxHistoryValue#</span>
+        <span class="tendance" title="{{Tendance}}" class="tooltips">Tendance : <i class="#tendance#"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="timeCmd label label-default #history#" data-type="info"></div>
+  <template>
+    <div>time : duration|date ({{Affiche durée ou date de la valeur}})</div>
+  </template>
+  <style>
+    div.cmd.cmd-widget[data-cmd_id="#id#"][data-type="info"][data-subtype="numeric"][data-template="tile"] .state {
+      font-size: 1.2em !important;
+      
+    }
+    .hygrometer-box {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .circle-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+        }
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #5c7083  0%,
+                #1f4f78  var(--humidity),
+                #e0e0e0 var(--humidity)
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0px 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .circle-inner {
+            width: 70px;
+            height: 70px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .humidity-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #337ab7;
+        }
+        
+    .Hygrometry-widget {
+            background: linear-gradient(135deg, #fbfbfb  0%, #65666d  100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+
+        .Hygrometry-widget .title {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+      
+      
+  </style>
+  <script>
+    jeedom.cmd.addUpdateFunction('#id#', function (_options) {
+      if (is_object(cmd = document.querySelector('.cmd[data-cmd_uid="#uid#"]'))) {
+        cmd.querySelector('.content').setAttribute('title', '{{Date de valeur}}: ' + _options.valueDate + '<br>{{Date de collecte}}: ' + _options.collectDate)
+        if ('#time#' == 'duration' || '#time#' == 'date') {
+          jeedom.cmd.displayDuration(_options.valueDate, cmd.querySelector('.timeCmd'), '#time#')
+        }
+
+        if (is_numeric(_options.value)) {
+          
+            const circle = document.getElementById('circle#id#');
+            const humidityElement = document.getElementById('humidity#id#');
+            humidityElement.textContent = _options.display_value + _options.unit;
+            circle.style.setProperty('--humidity', _options.display_value + '%');
+        } else {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-danger">' + _options.value + '</span>'
+        }
+
+        if (_options.alertLevel == 'warning') {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-warning"><i class="fas fa-bell"></i> ' + _options.value + '</span>'
+        } else if (_options.alertLevel == 'danger') {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-danger"><i class="fas fa-exclamation"></i> ' + _options.value + '</span>'
+        }
+
+       
+       
+      }
+    })
+
+    jeedom.cmd.refreshValue([{ cmd_id: '#id#', value: '#value#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#' }])
+  </script>
+</div>

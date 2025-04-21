@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="card-header bg-danger text-white">
+        <h4 style="justify-self: center;font-weight: bold;">🚨 Alarme et Alerte Actives</h4>
+    </div>
+    <div class="card-body">
+        <ul id="alertList" class="list-group">
+            <!-- Données insérées dynamiquement -->
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Exemple de données (remplaçable par une API)
+    const alertesActives = [
+        { date: "2024-02-24 12:30", type: "Alarme", description: "Surchauffe moteur" },
+        { date: "2024-02-24 12:45", type: "Alerte", description: "Batterie faible" },
+    ];
+
+    // Tableau des ids à surveiller
+    const ids = ['1005', '1006', '1007'];  // Remplacez par vos vrais IDs
+
+    // Fonction d'affichage des alertes
+    function afficherAlertes() {
+        let listItems = "";
+        alertesActives.forEach(alert => {
+            listItems += `<li class="list-group-item">
+                            <b>${alert.date}</b> - <span class="text-danger">${alert.type}</span>: ${alert.description}
+                          </li>`;
+        });
+        document.getElementById("alertList").innerHTML = listItems;
+    }
+
+    // Fonction pour récupérer le nom de la commande Jeedom
+    function getCmdName(id) {
+        return new Promise((resolve, reject) => {
+            jeedom.cmd.get({
+                id: id
+            }, function (_cmd) {
+                if (_cmd && _cmd.name) {
+                    resolve(_cmd.name);
+                } else {
+                    reject("Commande introuvable");
+                }
+            });
+        });
+    }
+
+    // Fonction qui va être appelée chaque fois qu'une valeur est mise à jour
+    function handleAlertUpdate(id, value) {
+      
+        if (value === 1) {
+            // Récupérer le nom de la commande et ajouter l'alerte
+            getCmdName(id).then(cmdName => {
+                alertesActives.push({ 
+                    date: new Date().toLocaleString(), 
+                    type: 'Alerte', 
+                    description: `Alerte pour ${cmdName}: Valeur activée` 
+                });
+                afficherAlertes(); // Met à jour l'affichage des alertes
+            }).catch(error => {
+                console.error(error);  // En cas d'erreur de récupération du nom
+            });
+        }
+    }
+
+    // Boucle pour ajouter une fonction de mise à jour pour chaque id
+    ids.forEach(id => {
+      alert("ok");
+        // Ajoute une fonction de mise à jour pour chaque id
+        jeedom.cmd.addUpdateFunction(id, function (_options) {
+          alert("ok111");
+            const value = _options.state;  // Récupère la valeur de l'option
+            handleAlertUpdate(id, value);   // Appelle la fonction pour gérer l'alerte
+        });
+    });
+
+    afficherAlertes();  // Affiche les alertes initiales
+</script>

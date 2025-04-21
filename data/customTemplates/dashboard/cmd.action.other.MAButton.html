@@ -1,0 +1,87 @@
+<div class="cmd cmd-widget  L-widget" >
+  
+
+    <div class="title #hide_name#">
+        <div class="cmdName">#name_display#</div>
+      </div>
+      <div class="content">
+        <span class="iconCmd"><i class="fas fa-lightbulb L-icon" style="cursor: pointer;" id="lightbulb#id#"></i></span>
+      </div>
+
+  <template>
+
+  </template>	
+    </div>
+
+<script type="text/javascript">
+
+  jeedom.cmd.update['#id#'] = function (_options) {
+        var element = document.getElementById('lightbulb#id#');
+        if (!element) {
+            console.error('Element with ID lightbulb#id# not found.');
+            return;
+        }
+
+        if (_options.display_value === '1' || _options.display_value === 1 || 
+            _options.display_value === '99' || _options.display_value === 99 || 
+            _options.display_value === 'on') {
+            element.classList.add("icon-active");
+        } else {
+            element.classList.remove("icon-active");
+        }
+    };
+
+  jeedom.cmd.update['#id#']({ display_value: '#state#' });
+
+  $('#lightbulb#id#').off().on('click', function () {
+        jeedom.cmd.execute({ id: '#id#' });
+        $(this).toggleClass("icon-active");
+  });
+</script>
+<style>
+
+  div.cmd.cmd-widget[data-cmd_id="#id#"][data-type="info"][data-subtype="numeric"][data-template="tile"] .state {
+      font-size: 1.2em !important;
+      
+    }
+    .L-widget {
+    background: linear-gradient(135deg, #fbfbfb 0%, #65666d 100%);
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    max-width: 130px !important; /* Largeur maximale */
+    width: 130px; /* Largeur fixe */
+    height: 130px; /* Hauteur fixe */
+    display: flex; /* Pour aligner le contenu */
+    flex-direction: column; /* Orientation verticale */
+    justify-content: space-between; /* Espacement uniforme */
+    align-items: center; /* Centrer le contenu horizontalement */
+}
+
+.L-widget .title {
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-overflow: ellipsis; /* Si le texte est trop long */
+    overflow: hidden; /* Cache le débordement */
+    white-space: normal; /* Empêche le retour à la ligne */
+    max-width: 100%; /* Largeur maximale égale à celle du parent */
+}
+
+
+       
+        .icon-active {
+      font-size: 48px; /* Taille de l'icône */
+      color: #FFD700; /* Jaune brillant */
+      text-shadow: 0 0 0px #FFD700, 0 0 2px #FFD700, 0 0 30px #FFA500;
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .L-icon:hover {
+      transform: scale(1.2); /* Zoom au survol */
+      text-shadow: 0 0 15px #FFFF00, 0 0 30px #FFD700, 0 0 45px #FFA500;
+    }
+      
+</style>

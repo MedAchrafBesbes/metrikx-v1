@@ -1,0 +1,178 @@
+<div class="temperature-widget cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="tile" data-cmd_id="#id#"
+  data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+  
+  <!-- Title Section -->
+  <div class="title #hide_name#">
+    <div>#name_display#</div>
+  </div>
+
+  <!-- Air Status Section -->
+  <div class="containerETT">
+    <div class="air air-neuf">
+      <span>Air Neuf<br> <b id="AirNeuf#id#">.. </b></span>
+      <div class="arrow red"></div>
+    </div>
+    <div class="air air-repris">
+      <span>Air Repris<br><b id="AirRepris#id#">.. </b></span>
+      <div class="arrow orange"></div>
+    </div>
+    <div class="air air-souffle">
+      <div class="arrow blue"></div>
+      <span>Air Soufflé<br><b id="AirSouffle#id#">..</b></span>
+    </div>
+  </div>
+  <template>
+    <div>idAirNeuf </div>
+    <div>idAirRepris </div>
+  </template>
+
+
+  <!-- Time Information -->
+  <div class="timeCmd label label-default #history#" data-type="info"></div>
+
+  <!-- Template Section -->
+  <template>
+    <div>time: duration|date ({{Affiche durée ou date de la valeur}})</div>
+  </template>
+
+  <!-- Styles -->
+  <style>
+    .containerETT {
+      position: relative;
+      width: 575px;
+      max-width: 600px;
+      aspect-ratio: 16 / 9;
+      background-image: url('data/img/ultir32.png.webp');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .air {
+      position: absolute;
+    }
+
+    .air-neuf {
+      top: 48%;
+      left: 12%;
+      display: flex;
+      align-items: center;
+    }
+
+    .air-repris {
+      bottom: 8%;
+      right: 53%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .air-souffle {
+      bottom: 15%;
+      right: 38%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .arrow {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      margin-left: 54px;
+    }
+
+    .arrow.red {
+      border-width: 10px 6px 10px 0;
+      border-color: transparent red transparent transparent;
+    }
+
+    .arrow.orange {
+      border-width: 10px 10px 0px 10px;
+      border-color: orange transparent transparent transparent;
+      margin-bottom: 40px;
+      margin-right: 15px;
+    }
+
+    .arrow.blue {
+      border-width: 10px 10px 0px 10px;
+      border-color: blue transparent transparent transparent;
+      margin-bottom: 40px;
+      margin-right: 15px;
+    }
+
+    
+
+    .temperature-widget .title {
+      font-weight: bold;
+      text-transform: capitalize;
+      font-size: x-large;
+      padding: 10px;
+    }
+
+    .temperature-widget .temp-value {
+      font-size: 2em;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+  </style>
+
+  <!-- JavaScript -->
+  <script>
+    
+
+    var idAirNeuf#id# = ('#idAirNeuf#' != '#' + 'idAirNeuf#') ? "#idAirNeuf#" : '';
+    var idAirRepris#id# = ('#idAirRepris#' != '#' + 'idAirRepris#') ? "#idAirRepris#" : '';
+    jeedom.cmd.addUpdateFunction('#id#', function (_options) {
+     
+     
+      if (_options.value) {
+          document.getElementById('AirSouffle#id#').innerHTML = _options.display_value+" "+_options.unit;
+        } 
+        if (_options.alertLevel === 'warning') {
+          cmd.querySelector('.value').innerHTML = `<span class="label label-warning"><i class="fas fa-bell"></i> ${_options.value}</span>`;
+        } else if (_options.alertLevel === 'danger') {
+          cmd.querySelector('.value').innerHTML = `<span class="label label-danger"><i class="fas fa-exclamation"></i> ${_options.value}</span>`;
+        }
+      
+    });
+
+/* cyber002 */
+
+
+    jeedom.cmd.addUpdateFunction(idAirNeuf#id#, function (_options) {
+ 
+    
+        if (_options.value) {
+          document.getElementById('AirNeuf#id#').innerHTML = _options.display_value+" "+_options.unit;
+        } 
+
+      
+      
+    });
+
+
+    jeedom.cmd.addUpdateFunction(idAirRepris#id#, function (_options) {
+    
+        if (_options.value) {
+          document.getElementById('AirRepris#id#').innerHTML = _options.display_value+" "+_options.unit;
+        } 
+
+      
+      
+    });
+
+    // Initialize with refresh values
+    jeedom.cmd.refreshValue([
+      {
+        cmd_id: '#id#',
+        value: '#value#',
+        display_value: '#state#',
+        valueDate: '#valueDate#',
+        collectDate: '#collectDate#',
+        alertLevel: '#alertLevel#',
+        unit: '#unite#'
+      }
+    ]);
+  </script>
+</div>

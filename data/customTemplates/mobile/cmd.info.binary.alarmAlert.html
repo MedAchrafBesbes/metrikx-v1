@@ -1,0 +1,101 @@
+<div class="cmd cmd-widget #history#  hide" data-type="info" data-subtype="binary" data-template="alarmAlert" data-cmd_id="#id#"
+  data-cmd_uid="#uid#" data-version="#version#">
+
+ <div class="active content">
+    <div class="alarm-icon" aria-label="Icône d'alarme">🚨</div>
+    <span class="titlea">#name_display#</span>
+</div>
+  
+  <div class="timeCmd label label-default #history#" data-type="info"></div>
+ 
+  <style>
+    div.cmd.cmd-widget[data-cmd_id="#id#"][data-type="info"][data-subtype="binary"][data-template="alarmAlert"]  {
+      margin: 10px!important;
+      width: -webkit-fill-available!important;
+      gap: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      padding: 10px;
+      border: 2px solid #ccc ;
+      border-radius: 8px!important;
+      background-color: #ccc;
+     
+    }
+	.titlea{
+      line-height: 1;
+    }
+   div.cmd.cmd-widget[data-cmd_id="#id#"][data-type="info"][data-subtype="binary"][data-template="alarmAlert"]  .content {
+            display: flex!important;
+            align-items: center!important;
+            gap: 10px!important;
+            font-family: Arial, sans-serif!important;
+            font-size: 18px!important;
+     		flex-direction: row!important;
+           
+            
+        }
+
+        .alarm-icon {
+            width: 30px;
+            height: 30px;
+            background-color: gray;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        div.cmd.cmd-widget[data-cmd_id="#id#"][data-type="info"][data-subtype="binary"][data-template="alarmAlert"] .active .alarm-icon {
+            background-color: red;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
+     
+      
+  </style>
+  <script>
+    jeedom.cmd.addUpdateFunction('#id#', function (_options) {
+      if (is_object(cmd = document.querySelector('.cmd[data-cmd_uid="#uid#"]'))) {
+        cmd.querySelector('.content').setAttribute('title', '{{Date de valeur}}: ' + _options.valueDate + '<br>{{Date de collecte}}: ' + _options.collectDate)
+        if ('#_time_widget_#' == '1' || '#time#' == 'duration' || '#time#' == 'date') {
+          jeedom.cmd.displayDuration(_options.valueDate, cmd.querySelector('.timeCmd'), '#time#')
+        }
+
+
+
+        // Récupération du nom de la commande
+        var cmdName = '';
+        var divName = cmd.querySelector('.titlea');
+        if (divName !== null) {
+          cmdName = divName.innerText;
+        }
+
+
+        var iconState = cmd.querySelector('.alarm-widget');
+        if (_options.display_value == 1) {
+          
+       cmd.classList.remove("hide");
+        } else if (_options.display_value == 0) {
+            cmd.classList.add("hide");
+        } else {
+            iconState.innerHTML = '<span class="label label-danger">' + _options.value + '</span>'
+        }
+
+        if (_options.alertLevel == 'warning') {
+            iconState.innerHTML = '<span class="label label-warning"><i class="fas fa-bell"></i> ' + _options.value + '</span>'
+        } else if (_options.alertLevel == 'danger') {
+            iconState.innerHTML = '<span class="label label-danger"><i class="fas fa-exclamation"></i> ' + _options.value + '</span>'
+        }
+       
+      }
+    })
+
+    jeedom.cmd.refreshValue([{ cmd_id: '#id#', value: '#value#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#' }]) 
+  </script>
+</div>

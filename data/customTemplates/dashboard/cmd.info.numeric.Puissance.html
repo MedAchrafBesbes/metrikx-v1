@@ -1,0 +1,138 @@
+<div class=" cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="tile" data-cmd_id="#id#"
+  data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+ 
+  <div class="content">
+    <div class="right">
+      <div class="widget-Energy">
+        
+        <h2> #name_display#</h2>
+        <div class="value-Energy value">.. <span class="unit-Energy"></span></div>
+        <div class="value-Energy" id="prix#id#">.. <span class="unit-Energy"></span></div>
+      </div>
+      <div class="cmdStats #hide_history#">
+        <span title="{{Minimum}}" class="tooltips">Min : #minHistoryValue#</span>
+        <span title="{{Moyenne}}" class="tooltips">Moy : #averageHistoryValue#</span>
+        <span title="{{Maximum}}" class="tooltips">Max : #maxHistoryValue#</span>
+        <span class="tendance" title="{{Tendance}}" class="tooltips">Tendance : <i class="#tendance#"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="timeCmd label label-default #history#" data-type="info"></div>
+  <template>
+    <div>prix</div>
+    <div>time : duration|date ({{Affiche durée ou date de la valeur}})</div>
+  </template>
+  <style>
+    div.cmd.cmd-widget[data-cmd_id="#id#"][data-type="info"][data-subtype="numeric"][data-template="tile"] .state {
+      font-size: 1.2em !important;
+      
+    }
+
+
+    .widget-Energy {
+      margin: 14px;
+      background: linear-gradient(135deg, #4caf50, #81c784);
+      width: 300px;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .widget-Energy:before {
+      content: "";
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -100%;
+      left: -100%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 70%);
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(50%, 50%);
+      }
+    }
+
+    .widget-Energy .icon {
+      font-size: 50px;
+      margin-bottom: 10px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .widget-Energy h2 {
+      font-size: x-large;
+      margin: 10px 0;
+      font-weight: bold;
+      color: white;
+    }
+
+    .widget-Energy .value-Energy {
+      font-size: large;
+      font-weight: bold;
+      padding: 10px;
+    }
+
+    .widget-Energy .unit-Energy {
+      font-size: 14px;
+      margin-top: -5px;
+    }
+      
+  </style>
+  <script>
+        var prix#id# = ('#prix#' != '#' + 'prix#') ? "#prix#" : '';
+
+    jeedom.cmd.addUpdateFunction('#id#', function (_options) {
+      if (is_object(cmd = document.querySelector('.cmd[data-cmd_uid="#uid#"]'))) {
+        cmd.querySelector('.content').setAttribute('title', '{{Date de valeur}}: ' + _options.valueDate + '<br>{{Date de collecte}}: ' + _options.collectDate)
+        if ('#time#' == 'duration' || '#time#' == 'date') {
+          jeedom.cmd.displayDuration(_options.valueDate, cmd.querySelector('.timeCmd'), '#time#')
+        }
+
+        if (is_numeric(_options.value)) {
+          cmd.querySelector('.value').innerHTML = _options.display_value+'<span class="unit-Energy">'+_options.unit+'</span>'
+
+        } else {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-danger">' + _options.value + '</span>'
+        }
+
+        if (_options.alertLevel == 'warning') {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-warning"><i class="fas fa-bell"></i> ' + _options.value + '</span>'
+        } else if (_options.alertLevel == 'danger') {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-danger"><i class="fas fa-exclamation"></i> ' + _options.value + '</span>'
+        }
+
+       
+       
+      }
+    })
+    jeedom.cmd.addUpdateFunction(prix#id#, function (_options) {
+ 
+    
+      if (_options.value) {
+        document.getElementById('prix#id#').innerHTML = _options.display_value+'<span class="unit-Energy">'+_options.unit+'</span>';
+      } 
+
+
+
+      });
+    jeedom.cmd.refreshValue([{ cmd_id: '#id#', value: '#value#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#' }])
+  </script>
+</div>

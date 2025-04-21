@@ -1,0 +1,154 @@
+<div class="schneider-widget cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="tile" data-cmd_id="#id#"
+  data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+  
+  <!-- Title Section -->
+  <div class="title #hide_name#">
+    <div>#name_display#</div>
+  </div>
+
+  <!-- Air Status Section -->
+  <div class="containerschneider">
+       <div class="switch-led switch-led-green" id="led">
+        <div class="switch-led-border">
+            <div class="switch-led-light"></div>
+        </div>
+    </div>
+ 
+    
+    <div class="energie energie-display">
+      
+      
+    <span>Énergie active T<br><b id="AirSouffle#id#">..</b></span>
+      
+    </div>
+  </div>
+  <template>
+   
+  </template>
+
+
+  <!-- Time Information -->
+  <div class="timeCmd label label-default #history#" data-type="info"></div>
+
+  <!-- Template Section -->
+  <template>
+    <div>time: duration|date ({{Affiche durée ou date de la valeur}})</div>
+  </template>
+
+  <!-- Styles -->
+  <style>
+    
+    .containerschneider {
+      position: relative;
+      width: 575px;
+      max-width: 600px;
+      aspect-ratio: 16 / 9;
+      background-image: url('data/img/COMPTEUR.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      
+    }
+
+    .energie {
+      position: absolute;
+    }
+
+    
+    .energie-display {
+      	color: #0f0;
+    	line-height: normal;
+      	text-shadow: 2px 2px 4px #0f0;
+      	bottom: 41%;
+    	right: 32%;
+      	display: flex;
+      	align-items: center;
+      	justify-content: flex-end;
+       flex-direction: column;
+    }
+
+   
+ .schneider-widget {
+    background: linear-gradient(135deg, #fbfbfb 0%, #048909 100%);
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    }
+    
+
+    .schneider-widget .title {
+      font-weight: bold;
+      text-transform: capitalize;
+      font-size: x-large;
+      padding: 10px;
+    }
+
+    .schneider-widget .temp-value {
+      font-size: 2em;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+  </style>
+
+  <!-- JavaScript -->
+  <script>
+    
+
+    var idAirNeuf#id# = ('#idAirNeuf#' != '#' + 'idAirNeuf#') ? "#idAirNeuf#" : '';
+    var idAirRepris#id# = ('#idAirRepris#' != '#' + 'idAirRepris#') ? "#idAirRepris#" : '';
+    jeedom.cmd.addUpdateFunction('#id#', function (_options) {
+     
+     
+      if (_options.value) {
+          document.getElementById('AirSouffle#id#').innerHTML = _options.display_value+" "+_options.unit;
+        } 
+        if (_options.alertLevel === 'warning') {
+          cmd.querySelector('.value').innerHTML = `<span class="label label-warning"><i class="fas fa-bell"></i> ${_options.value}</span>`;
+        } else if (_options.alertLevel === 'danger') {
+          cmd.querySelector('.value').innerHTML = `<span class="label label-danger"><i class="fas fa-exclamation"></i> ${_options.value}</span>`;
+        }
+      
+    });
+
+
+
+
+    jeedom.cmd.addUpdateFunction(idAirNeuf#id#, function (_options) {
+ 
+    
+        if (_options.value) {
+          document.getElementById('AirNeuf#id#').innerHTML = _options.display_value+" "+_options.unit;
+        } 
+
+      
+      
+    });
+
+
+    jeedom.cmd.addUpdateFunction(idAirRepris#id#, function (_options) {
+    
+        if (_options.value) {
+          document.getElementById('AirRepris#id#').innerHTML = _options.display_value+" "+_options.unit;
+        } 
+
+      
+      
+    });
+
+    // Initialize with refresh values
+    jeedom.cmd.refreshValue([
+      {
+        cmd_id: '#id#',
+        value: '#value#',
+        display_value: '#state#',
+        valueDate: '#valueDate#',
+        collectDate: '#collectDate#',
+        alertLevel: '#alertLevel#',
+        unit: '#unite#'
+      }
+    ]);
+  </script>
+</div>

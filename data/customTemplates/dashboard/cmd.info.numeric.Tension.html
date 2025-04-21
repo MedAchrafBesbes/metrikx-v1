@@ -1,0 +1,232 @@
+<div class=" cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="tile" data-cmd_id="#id#"
+  data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+ 
+  <div class="content">
+    <div class="right">
+     
+      <div class="widget-Energy">
+         <h2> #name_display#</h2>
+        <div class="widget-container">
+      
+	
+    <!-- Rectangle Voltmètre Numérique -->
+    <div class="voltage-rect">
+      <div class="voltage-display value">.. <span class="unit-Energy"></span></div>
+      
+    </div>
+</div>
+       
+      </div>
+      <div class="cmdStats #hide_history#">
+        <span title="{{Minimum}}" class="tooltips">Min : #minHistoryValue#</span>
+        <span title="{{Moyenne}}" class="tooltips">Moy : #averageHistoryValue#</span>
+        <span title="{{Maximum}}" class="tooltips">Max : #maxHistoryValue#</span>
+        <span class="tendance" title="{{Tendance}}" class="tooltips">Tendance : <i class="#tendance#"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="timeCmd label label-default #history#" data-type="info"></div>
+  <template>
+    <div>prix</div>
+    <div>time : duration|date ({{Affiche durée ou date de la valeur}})</div>
+  </template>
+  <style>
+    div.cmd.cmd-widget[data-cmd_id="#id#"][data-type="info"][data-subtype="numeric"][data-template="tile"] .state {
+      font-size: 1.2em !important;
+      
+    }
+
+.widget-container {
+      
+    justify-items: center;
+     
+    }
+    .widget-Energy {
+      margin: 14px;
+      background: linear-gradient(135deg, #4caf50, #81c784);
+      width: auto;
+  
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .widget-Energy:before {
+      content: "";
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -100%;
+      left: -100%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 70%);
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(50%, 50%);
+      }
+    }
+
+    .widget-Energy .icon {
+      font-size: 50px;
+      margin-bottom: 10px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .widget-Energy h2 {
+      font-size: x-large;
+      margin: 10px 0;
+      font-weight: bold;
+      color: white;
+    }
+
+    .widget-Energy .value-Energy {
+      font-size: large;
+      font-weight: bold;
+      padding: 10px;
+    }
+
+    .widget-Energy .unit-Energy {
+      font-size: 14px;
+      margin-top: -5px;
+    }
+    .line-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-around;
+            margin-right: 40px; /* Espacement pour le voltmètre */
+        }
+
+        .line {
+            display: flex;
+            align-items: center;
+            margin: 3px 0;
+        }
+
+        .label {
+            width: 80px;
+            text-align: right;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .phase {
+            width: 150px;  /* Largeur plus grande */
+            height: 10px;  /* Ligne fine */
+        }
+
+        .phase-1 {
+            background-color: #FF0000; /* Rouge pour la phase 1 */
+        }
+
+        .phase-2 {
+            background-color: #FFD700; /* Jaune pour la phase 2 */
+            opacity: 0.3; /* Réduire l'opacité pour la rendre subtilement cachée */
+        }
+
+        .phase-3 {
+            background-color: #0000FF; /* Bleu pour la phase 3 */
+            opacity: 0.3; /* Réduire l'opacité pour la rendre subtilement cachée */
+        }
+
+        .neutral {
+            width: 150px;  /* Largeur plus grande */
+            height: 10px;  /* Ligne fine */
+            background-color: #808080; /* Gris pour le neutre */
+        }
+
+        /* Design du voltmètre numérique */
+        .voltage-rect {
+            width: 220px;
+            height: 100px;
+            background-color: #222;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #00FF00; /* Texte vert typique des voltmètres numériques */
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 36px;
+            position: relative;
+        }
+
+        /* Affichage du voltage */
+        .voltage-display {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Design du cadre de l'écran */
+        .voltage-rect::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid #00FF00;
+            border-radius: 8px;
+        }
+      
+  </style>
+  <script>
+        var prix#id# = ('#prix#' != '#' + 'prix#') ? "#prix#" : '';
+
+    jeedom.cmd.addUpdateFunction('#id#', function (_options) {
+      if (is_object(cmd = document.querySelector('.cmd[data-cmd_uid="#uid#"]'))) {
+        cmd.querySelector('.content').setAttribute('title', '{{Date de valeur}}: ' + _options.valueDate + '<br>{{Date de collecte}}: ' + _options.collectDate)
+        if ('#time#' == 'duration' || '#time#' == 'date') {
+          jeedom.cmd.displayDuration(_options.valueDate, cmd.querySelector('.timeCmd'), '#time#')
+        }
+
+        if (is_numeric(_options.value)) {
+          cmd.querySelector('.value').innerHTML = _options.display_value+'<span class="unit-Energy">'+_options.unit+'</span>'
+
+        } else {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-danger">' + _options.value + '</span>'
+        }
+
+        if (_options.alertLevel == 'warning') {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-warning"><i class="fas fa-bell"></i> ' + _options.value + '</span>'
+        } else if (_options.alertLevel == 'danger') {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-danger"><i class="fas fa-exclamation"></i> ' + _options.value + '</span>'
+        }
+
+       
+       
+      }
+    })
+    jeedom.cmd.addUpdateFunction(prix#id#, function (_options) {
+ 
+    
+      if (_options.value) {
+        document.getElementById('prix#id#').innerHTML = _options.display_value+'<span class="unit-Energy">'+_options.unit+'</span>';
+      } 
+
+
+
+      });
+    jeedom.cmd.refreshValue([{ cmd_id: '#id#', value: '#value#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#' }])
+  </script>
+</div>
