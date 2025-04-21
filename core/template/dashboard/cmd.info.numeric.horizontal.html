@@ -1,0 +1,56 @@
+<div class="cmd cmd-widget hgauge #history#" data-type="info" data-subtype="numeric" data-template="horizontal" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+  <div class="title #hide_name#">
+    <div class="cmdName">#name_display#</div>
+  </div>
+  <div class="content">
+    <div class="hgauge-bckg"></div>
+    <div class="hgauge-value"></div>
+  </div>
+  <div class="state">
+    <span class="value"></span> <span class="unit"></span>
+  </div>
+  <div class="timeCmd label label-default #history#" data-type="info"></div>
+  <div class="cmdStats #hide_history#">
+    <span title="{{Minimum}}" class="tooltips">#minHistoryValue#</span>|<span title="{{Moyenne}}" class="tooltips">#averageHistoryValue#</span>|<span title="{{Maximum}}" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
+  </div>
+  <template>
+    <div>color : rgb(20,20,20) ({{Couleur de l'indicateur de valeur}})</div>
+    <div>time : duration|date ({{Affiche durée ou date de la valeur}})</div>
+  </template>
+  <script>
+    jeedom.cmd.addUpdateFunction('#id#', function(_options) {
+      if (is_object(cmd = document.querySelector('.cmd[data-cmd_uid="#uid#"]'))) {
+        cmd.querySelectorAll('.content, .state').forEach(function(e) { e.setAttribute('title', '{{Date de valeur}}: ' + _options.valueDate + '<br>{{Date de collecte}}: ' + _options.collectDate) })
+        if ('#time#' == 'duration' || '#time#' == 'date') {
+          jeedom.cmd.displayDuration(_options.valueDate, cmd.querySelector('.timeCmd'), '#time#')
+        }
+
+        if (is_numeric(_options.value)) {
+          let position = parseFloat(_options.value), minValue = parseFloat('#minValue#'), maxValue = parseFloat('#maxValue#')
+          if (position > maxValue) position = maxValue
+          if (position < minValue) position = minValue
+          let width = ((position - minValue) * 100) / (maxValue - minValue)
+          width = Math.round(parseFloat(width) * 10) / 10
+
+          cmd.querySelector('.hgauge-value').style.width = width + '%'
+          cmd.querySelector('.value').innerHTML = _options.display_value
+          cmd.querySelector('.unit').innerHTML = _options.unit
+        } else {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-danger">' + _options.value + '</span>'
+        }
+
+        if (_options.alertLevel == 'warning') {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-warning"><i class="fas fa-bell"></i> ' + _options.value + '</span>'
+        } else if (_options.alertLevel == 'danger') {
+          cmd.querySelector('.value').innerHTML = '<span class="label label-danger"><i class="fas fa-exclamation"></i> ' + _options.value + '</span>'
+        }
+      }
+    })
+
+    jeedom.cmd.refreshValue([{ cmd_id: '#id#', value: '#value#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#' }])
+
+    if (domUtils.issetWidgetOptParam('#color#', 'color')) {
+      document.querySelector('.cmd[data-cmd_uid="#uid#"] .hgauge-value').style.backgroundColor = '#color#'
+    }
+  </script>
+</div>

@@ -1,0 +1,29 @@
+<div class="cmd cmd-widget hgauge #history#" data-type="info" data-subtype="numeric" data-template="horizontal" data-version="#version#" data-eqLogic_id="#eqLogic_id#" data-cmd_id="#id#" data-cmd_uid="#uid#">
+	<center>
+		<div class="cmdName #hide_name#">#name_display#</div>
+		<div class="hgauge-bckg"></div>
+		<div class="hgauge-value"></div>
+		<div class="state"><strong>#state#</strong> <strong class="unit">#unite#</strong></div>
+	</center>
+
+	<script>
+		 jeedom.cmd.addUpdateFunction('#id#',function(_options) {
+			let position = _options.value
+			let minValue = ('#minValue#' == '') ? 0 : parseInt('#minValue#')
+			let maxValue = ('#maxValue#' == '') ? 100 : parseInt('#maxValue#')
+			if (position > maxValue) position = maxValue
+			if (position < minValue) position = minValue
+			let width = ((position - minValue) * 100) / (maxValue - minValue)
+			width = Math.round(parseFloat(width) * 10) / 10
+			$('.cmd[data-cmd_uid=#uid#] .hgauge-value').width(width+'%')
+			$('.cmd[data-cmd_uid=#uid#] .state strong').first().text(_options.display_value)
+			$('.cmd[data-cmd_uid=#uid#] .unit').text(_options.unit)
+		});
+
+		jeedom.cmd.refreshValue([{cmd_id:'#id#', value: '#value#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#'}])
+
+		if ($.issetWidgetOptParam('#color#', 'color')) {
+			 $('.cmd[data-cmd_id=#id#] .hgauge-value').css('background', '#color#')
+		}
+	</script>
+</div>

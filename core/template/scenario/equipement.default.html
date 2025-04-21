@@ -1,0 +1,25 @@
+<!--template/scenario/equipement.default-->
+<div class="input-group input-group-sm" style="width: 100%">
+  <span class="input-group-addon roundedLeft">{{Equipement}}</span>
+  <input class="expressionAttr form-control input-sm" data-l1key="options" data-l2key="eqLogic" data-option_id="#id#" data-uid="#uid#" value="#eqLogic#"/>
+  <span class="input-group-btn">
+    <a class="btn btn-default listEquipementInfo" data-cmd_id="#id#" data-uid="#uid#" tooltip="{{Sélectionner un équipement}}" ><i class="fas fa-list-alt"></i></a>
+  </span>
+  <span class="input-group-addon">{{Action}}</span>
+  <select class="expressionAttr form-control input-sm roundedRight" data-l1key="options" data-l2key="action" data-option_id="#id#" data-uid="#uid#">
+    <option value="show">{{Visible}}</option>
+    <option value="hide">{{Masquer}}</option>
+    <option value="activate">{{Activer}}</option>
+    <option value="deactivate">{{Désactiver}}</option>
+  </select>
+</div>
+<script>
+  document.querySelector('.listEquipementInfo[data-uid="#uid#"]').addEventListener('click', function() {
+    jeedom.eqLogic.getSelectModal({}, function(result) {
+      document.querySelector('.expressionAttr[data-uid="#uid#"][data-l1key="options"][data-l2key="eqLogic"]').value = result.human
+    })
+  })
+  if ('#action#' != '' && document.querySelector('.expressionAttr[data-uid="#uid#"][data-l1key="options"][data-l2key="action"] option[value="#action#"]')?.innerHTML != '') {
+    document.querySelector('.expressionAttr[data-uid="#uid#"][data-l1key="options"][data-l2key="action"]').value = '#action#'
+  }
+</script>

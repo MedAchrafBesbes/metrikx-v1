@@ -1,0 +1,66 @@
+<div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-template="value" data-version="#version#" data-eqLogic_id="#eqLogic_id#" data-cmd_id="#id#" data-cmd_uid="#uid#">
+  <div class="cmdName #hide_name#">#name_display#</div>
+  <input type="number" min="#minValue#" max="#maxValue#" value="#state#" step="1" id="sliderInput#id#">
+  <div id="widget_slider#id#" class="slider full-width-slider"></div>
+  <script>
+    var $inputNumber#id# = $('#sliderInput#id#')
+    var step#id# = 1
+    var spinTimer#id# = null
+    if ($.issetWidgetOptParam('#step#', 'step')) {
+      step#id# = parseFloat('#step#')
+      $inputNumber#id#.attr('step', step#id#)
+    }
+    if ('#noslider#' != '1') {
+      var mySlider#id# = $.createWidgetSlider({
+        sliderDiv: document.getElementById('widget_slider#id#'),
+        state: ('#state#' == '') ? #minValue# : '#state#',
+        min: #minValue#,
+        max: #maxValue#,
+        step: step#id#,
+        tooltips: false
+      })
+
+      if ($.issetWidgetOptParam('#color#', 'color')) {
+        $(mySlider#id#.target).find('.noUi-handle').style('background', '#color#', 'important')
+        $(mySlider#id#.target).find('.noUi-connect').style('background', '#color#', 'important')
+      }
+
+      mySlider#id#.on('update', function(values, handle) {
+        let value = values[handle].replace('#unite#', '').trim()
+        if (value) {
+          if (parseInt(values[handle]) == parseFloat(value)) {
+            $inputNumber#id#.val(parseInt(value))
+          } else {
+            $inputNumber#id#.val(parseFloat(value))
+          }
+        }
+      })
+
+      mySlider#id#.on('change', function(values, handle) {
+        jeedom.cmd.execute({id: '#id#', value: {slider: values[handle].replace('#unite#', '').trim()}})
+      })
+    }
+
+    $inputNumber#id#.on('change', function(event) {
+      let value = this.value
+      clearTimeout(spinTimer#id#)
+      spinTimer#id# = setTimeout(function() {
+        if ('#noslider#' != '1') mySlider#id#.set(value)
+        jeedom.cmd.execute({id: '#id#', value: {slider: value}})
+      }, 1000)
+
+
+    })
+
+    $inputNumber#id#.on('keydown', function(event) {
+      if (event.which === 38 || event.which === 40) {
+        event.preventDefault()
+      }
+    })
+
+    jeedom.cmd.addUpdateFunction('#id#',function(_options) {
+      if ('#noslider#' != '1') $inputNumber#id#.val(_options.value)
+      mySlider#id#.set(_options.value)
+    });
+  </script>
+</div>

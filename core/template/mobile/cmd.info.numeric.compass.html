@@ -1,0 +1,38 @@
+<div class="cmd cmd-widget widget-compass" data-type="info" data-subtype="numeric" data-template="compass" data-version="#version#" data-eqLogic_id="#eqLogic_id#" data-cmd_id="#id#" data-cmd_uid="#uid#">
+  <center>
+    <div class="cmdName #hide_name#">#name_display#</div>
+      <div class="widget-compass-container">
+      <div class="widget-compass-outline"></div>
+      <div class="widget-compass-needle-placer">
+        <div class="widget-compass-needle"></div>
+      </div>
+      <div class="state"></div>
+      <div class="winDir"></div>
+    </div>
+  </center>
+  <script>
+    var cmd#id# = $('.cmd[data-cmd_id=#id#]')
+    jeedom.cmd.addUpdateFunction('#id#',function(_options) {
+      let directions#id# = ['{{Nord}}', '{{Nord-Est}}', '{{Est}}', '{{Sud-Est}}', '{{Sud}}', '{{Sud-Ouest}}', '{{Ouest}}', '{{Nord-Ouest}}']
+      var windDir#id# = directions#id#[Math.round(((_options.display_value %= 360) < 0 ? _options.display_value + 360 : _options.display_value) / 45) % 8]
+      cmd#id#.find('.widget-compass-needle-placer').css('transform', 'rotate(' + _options.display_value +'deg)')
+      cmd#id#.find('.state').text(_options.display_value.toString()+'°')
+      cmd#id#.find('.winDir').html(windDir#id#)
+    });
+
+    jeedom.cmd.refreshValue([{cmd_id :'#id#',value: '#value#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#'}])
+
+    if ($.issetWidgetOptParam('#needle_color#', 'needle_color')) {
+      cmd#id#.find('.widget-compass-needle').css('border-top-color','#needle_color#')
+    }
+    if ($.issetWidgetOptParam('#ns_color#', 'ns_color')) {
+      cmd#id#.find('.widget-compass-outline').css({'border-top-color' : '#ns_color#', 'border-bottom-color' : '#ns_color#'})
+    }
+    if ($.issetWidgetOptParam('#oe_color#', 'oe_color')) {
+      cmd#id#.find('.widget-compass-outline').css({'border-left-color' : '#oe_color#', 'border-right-color' : '#oe_color#'})
+    }
+    if ($.issetWidgetOptParam('#scale#', 'scale')) {
+      cmd#id#.find('.widget-compass-container').css('transform','scale(#scale#)')
+    }
+  </script>
+</div>

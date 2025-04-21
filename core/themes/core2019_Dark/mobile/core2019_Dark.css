@@ -1,0 +1,134 @@
+/*
+Theme Core 2019 @Jeedom
+Mobile Dark
+*/
+
+@import url("colors.css");
+
+::-webkit-scrollbar-thumb {
+  background: var(--btn-default-color) !important;
+}
+
+html,
+body,
+textarea {
+  scrollbar-color: var(--btn-default-color) transparent !important;
+}
+
+/* _____________________________DASHBOARD CATEGORIES title coloring */
+.eqLogic.eqLogic-widget {
+	color: var(--txt-color) !important;
+}
+
+.widget-name,
+.widget-name span,
+.widget-name a {
+	color: var(--sc-lightTxt-color) !important;
+}
+
+.ui-btn {
+	color: var(--link-color) !important;
+}
+
+.eqLogic.eqLogic-widget,
+.scenario.scenario-widget {
+	background-color: rgba(var(--eq-bg-color), var(--opacity));
+}
+
+[data-category=security] .widget-name {
+	background-color: rgba(var(--cat-security-color), var(--opacity));
+}
+[data-category=heating] .widget-name {
+	background-color: rgba(var(--cat-heating-color), var(--opacity));
+}
+[data-category=automatism] .widget-name {
+	background-color: rgba(var(--cat-automatism-color), var(--opacity));
+}
+[data-category=light] .widget-name {
+	background-color: rgba(var(--cat-light-color), var(--opacity));
+}
+[data-category=opening] .widget-name {
+  background-color: rgba(var(--cat-opening-color), var(--opacity));
+}
+[data-category=multimedia] .widget-name {
+	background-color: rgba(var(--cat-multimedia-color), var(--opacity));
+}
+[data-category=energy] .widget-name {
+	background-color: rgba(var(--cat-energy-color), var(--opacity));
+}
+[data-category=''] .widget-name {
+	background-color: rgba(var(--cat-other-color), var(--opacity));
+}
+.eqLogic-widget:not([data-category]) .widget-name{
+	background-color: rgba(var(--cat-other-color), var(--opacity));
+}
+.scenario-widget .widget-name {
+	background-color: rgba(var(--cat-scenario-color), var(--opacity)) !important;
+}
+
+/* ___________________________________________________________EQs */
+.timeCmd {
+	background-color: var(--el-defaultColor) !important;
+	color: var(--linkHoverLight-color);
+	opacity: 0.5;
+}
+
+.iconCmd > i {
+	color: var(--link-color) !important;
+}
+p.state {
+	color: var(--txt-color) !important;
+}
+.state,
+.state i {
+	color: var(--link-color) !important;
+}
+
+/* buttons */
+a.action.ui-btn {
+	background-color: var(--btn-default-color) !important;
+	color: var(--link-color) !important;
+}
+.eqLogic.eqLogic-widget :not(.ui-select) > .ui-btn:not(.ui-slider-handle),
+.scenario.scenario-widget :not(.ui-select) > .ui-btn:not(.ui-slider-handle) {
+	background: linear-gradient(var(--btnEq-default-color), var(--btnEq-default-color)) fixed !important;
+}
+.eqLogic.eqLogic-widget :not(.ui-select) > .ui-btn:not(.ui-slider-handle):hover,
+.scenario.scenario-widget :not(.ui-select) > .ui-btn:not(.ui-slider-handle):hover {
+	color: var(--linkHoverLight-color) !important;
+}
+
+.cmd:hover {
+	color: var(--linkHover-color) !important;
+}
+
+.eqLogic.eqLogic-widget .fa-refresh,
+.scenario.scenario-widget .fa-refresh,
+.statusCmd > i {
+	color: var(--eqTitle-color) !important;
+}
+
+.tableCmd,
+.highcharts-axis-title > tspan,
+.cmd-widget > center {
+	fill: var(--txt-color) !important;
+	color: var(--txt-color);
+}
+
+.ui-slider-track .ui-slider-handle {
+	background-color: var(--link-color) !important;
+}
+
+
+/* ___________________________________________________________GAUGES */
+.shuttergauge-value {
+	background: var(--link-color);
+}
+.shuttergauge > div:first-child {
+	color: var(--txt-color) !important;
+}
+.shuttergauge-bckg {
+	border-top: 6px solid var(--el-defaultColor) !important;
+	border-left: 4px solid var(--el-defaultColor) !important;
+	border-right: 4px solid var(--el-defaultColor) !important;
+}

@@ -1,0 +1,17 @@
+<span class="cmd cmd-widget" data-type="action" data-subtype="select" data-template="default" data-version="#version#" data-eqLogic_id="#eqLogic_id#" data-cmd_id="#id#" data-cmd_uid="#uid#">
+  <div class="cmdName #hide_name#">#name_display#</div>
+  <center>
+    <select class="selectCmd">
+      #listValue#
+    </select>
+  </center>
+  <script>
+    $(".cmd[data-cmd_uid=#uid#] .selectCmd").on('change', function () {
+      jeedom.cmd.execute({id: '#id#', value: {select: $(this).value()}})
+    })
+
+    jeedom.cmd.addUpdateFunction('#id#',function(_options) {
+      $(".cmd[data-cmd_uid=#uid#] .selectCmd").val(_options.display_value)
+    });
+  </script>
+</span>

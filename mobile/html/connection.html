@@ -1,0 +1,41 @@
+<div style="padding:10px 20px;">
+  <center>
+    <img id="img_loginImg" src="core/img/logo-jeedom-petit-nom-couleur-128x128.png" style="max-height: 300px;max-width: 100%;"/>
+  </center><br/>
+  <input type="text" id="in_login_username" value="" placeholder="{{Nom d'utilisateur}}" />
+  <input type="password" id="in_login_password" value="" placeholder="{{Mot de passe}}" />
+  <div id="div_twoFactorCode" style="display:none;">
+    <input type="text" id="in_twoFactorCode" value="" placeholder="{{Code à 2 facteurs}}" />
+  </div>
+  <form>
+    <input type="checkbox" id="cb_storeConnection" data-mini="true">
+    <label for="cb_storeConnection"><span style="color:black;">{{Enregistrer cet appareil}}</span></label>
+  </form>
+  <a id="bt_login_validate" href="#" class="ui-btn ui-corner-all ui-btn-raised clr-primary waves-effect waves-button">{{Connexion}}</a>
+</div>
+<script>
+  if(isset(jeedom.theme) && isset(jeedom.theme.product_image)){
+    $('#img_loginImg').attr('src',jeedom.theme.product_image);
+  }
+  $('#bt_login_validate').on('click', function() {
+    jeedom.user.login({
+      username: $('#in_login_username').val(),
+      password: $('#in_login_password').val(),
+      twoFactorCode: $('#in_twoFactorCode').val(),
+      storeConnection: $('#cb_storeConnection').value(),
+      error: function (error) {
+        if(error.code == -32012){
+          $('#div_twoFactorCode').show()
+          return
+        }
+        $.fn.showAlert({message: error.message, level: 'danger'});
+      },
+      success: function (data) {
+        if ($('#cb_storeConnection').value() == 1) {
+          localStorage.setItem("deviceKey", data.deviceKey);
+        }
+        jeedomUtils.initApplication();
+      }
+    });
+  });
+</script>

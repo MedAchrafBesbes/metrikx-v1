@@ -1,0 +1,47 @@
+<!--template/scenario/gotodesign.default-->
+<div class="input-group input-group-sm" style="width: 100%">
+  <span class="input-group-addon roundedLeft" style="width: 100px">{{Design}}</span>
+  <select class="expressionAttr form-control input-sm roundedRight" data-l1key="options" data-l2key="plan_id" data-cmd_id="#id#" data-uid="#uid#"></select>
+  <input class="expressionAttr form-control rounded-left" data-l1key="options" data-l2key="filter" placeholder="{{Filtre des designs}}" data-cmd_id="#id#" data-uid="#uid#">
+</div>
+<script>
+  jeedom.plan.allHeader({
+    error: function (error) {
+      jeedomUtils.showAlert({message: error.message, level: 'danger'});
+    },
+    success: function (plans) {
+      var select = document.querySelector('.expressionAttr[data-uid="#uid#"][data-l1key="options"][data-l2key="plan_id"]')
+      var newOption
+      for (var i in plans) {
+        newOption = document.createElement('option')
+        newOption.text = plans[i].name
+        newOption.value = plans[i].id
+        select.appendChild(newOption)
+      }
+
+      const input = document.querySelector('.expressionAttr[data-uid="#uid#"][data-l1key="options"][data-l2key="filter"]')
+      const allOptions = Array.from(select.options)
+
+      function filterOptions() {
+        const text = input.value.trim().toLowerCase().stripAccents()
+
+        select.innerHTML = ''
+
+        allOptions
+          .filter(option => {
+            const optionText = option.textContent.toLowerCase().stripAccents()
+            return text === '' || optionText.includes(text)
+          })
+          .forEach(option => {
+            select.add(option.cloneNode(true))
+          })
+      }      
+
+      input.addEventListener('input', filterOptions)
+      
+      if ('#plan_id#' != '' && document.querySelector('.expressionAttr[data-uid="#uid#"][data-l1key="options"][data-l2key="plan_id"] option[value="#plan_id#"]')?.innerHTML != '') {
+        document.querySelector('.expressionAttr[data-uid="#uid#"][data-l1key="options"][data-l2key="plan_id"]').value = '#plan_id#'
+      }
+    }
+  })
+</script>

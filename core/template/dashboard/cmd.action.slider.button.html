@@ -1,0 +1,71 @@
+<div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-template="button" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+  <div class="title #hide_name#">
+    <div class="cmdName">#name_display#</div>
+  </div>
+  <div class="content">
+    <div class="input-group buttons">
+      <span class="input-group-btn">
+        <a class="btn btn-default btn-sm bt_minus roundedLeft"><i class="fas fa-minus"></i></a>
+      </span>
+      <input type="text" class="input-sm in_value">
+      <span class="input-group-btn">
+        <a class="btn btn-default btn-sm bt_plus roundedRight"><i class="fas fa-plus"></i></a>
+      </span>
+    </div>
+  </div>
+  <div class="timeCmd label label-default #value_history#" data-type="info" data-cmd_id="#value_id#"></div>
+  <template>
+    <div>step : 0.5 ({{Pas du changement de valeur}})</div>
+    <div>width : 70 ({{Largeur de la zone de saisie}})</div>
+    <div>time : duration|date ({{Affiche durée ou date de la valeur}})</div>
+  </template>
+  <script>
+    document.querySelector('.cmd[data-cmd_uid="#uid#"] .bt_plus').addEventListener('click', function() {
+      let step = (domUtils.issetWidgetOptParam('#step#', 'step')) ? parseFloat('#step#') : 0.5
+      let input = document.querySelector('.cmd[data-cmd_uid="#uid#"] .in_value')
+      let value = parseFloat(input.value.replace("#unite#", "").replace(" ", "")) + step
+      if (value > parseFloat('#maxValue#')) value = parseFloat('#maxValue#')
+      input.value = value + ' #unite#'
+      clearTimeout(window['timerHandle#id#'])
+      window['timerHandle#id#'] = setTimeout(function() {
+        jeedom.cmd.execute({ id: '#id#', value: { slider: value } })
+      }, 1000)
+    })
+
+    document.querySelector('.cmd[data-cmd_uid="#uid#"] .bt_minus').addEventListener('click', function() {
+      let step = (domUtils.issetWidgetOptParam('#step#', 'step')) ? parseFloat('#step#') : 0.5
+      let input = document.querySelector('.cmd[data-cmd_uid="#uid#"] .in_value')
+      let value = parseFloat(input.value.replace("#unite#", "").replace(" ", "")) - step
+      if (value < parseFloat('#minValue#')) value = parseFloat('#minValue#')
+      input.value = value + ' #unite#'
+      clearTimeout(window['timerHandle#id#'])
+      window['timerHandle#id#'] = setTimeout(function() {
+        jeedom.cmd.execute({ id: '#id#', value: { slider: value } })
+      }, 1000)
+    })
+
+    document.querySelector('.cmd[data-cmd_uid="#uid#"] .in_value').addEventListener('change', function() {
+      let input = document.querySelector('.cmd[data-cmd_uid="#uid#"] .in_value')
+      let value = parseFloat(input.value.replace("#unite#", "").replace(" ", ""))
+      if (value > parseFloat('#maxValue#')) value = parseFloat('#maxValue#')
+      if (value < parseFloat('#minValue#')) value = parseFloat('#minValue#')
+      jeedom.cmd.execute({ id: '#id#', value: { slider: value } })
+    })
+
+    jeedom.cmd.addUpdateFunction('#id#', function(_options) {
+      if (is_object(cmd = document.querySelector('.cmd[data-cmd_uid="#uid#"]'))) {
+        if ('#time#' === 'duration' || '#time#' === 'date') {
+          jeedom.cmd.displayDuration(_options.valueDate, cmd.querySelector('.timeCmd'), '#time#')
+        }
+
+        document.querySelector('.cmd[data-cmd_uid="#uid#"] .in_value').value = _options.value + ' #unite#'
+      }
+    })
+
+    jeedom.cmd.refreshValue([{ cmd_id: '#id#', value: '#state#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#' }])
+
+    if (domUtils.issetWidgetOptParam('#width#', 'width') && parseFloat('#width#') >= 70) {
+      document.querySelector('.cmd[data-cmd_uid="#uid#"] .in_value').style.width = '#width#px'
+    }
+  </script>
+</div>

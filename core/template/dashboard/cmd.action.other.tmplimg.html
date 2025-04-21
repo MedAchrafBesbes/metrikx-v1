@@ -1,0 +1,60 @@
+<div class="cmd cmd-widget cursor" data-type="action" data-subtype="other" data-template="tmplimg" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+  <div class="title #hide_name#">
+    <div class="cmdName">#valueName#</div>
+  </div>
+  <div class="content">
+    <span class="execute imgCmd tooltips" title="#name#"></span>
+  </div>
+  <div class="timeCmd label label-default #value_history#" data-type="info" data-cmd_id="#value_id#"></div>
+  <template>
+    <div>time : duration|date ({{Affiche durée ou date de la valeur}})</div>
+  </template>
+  <script>
+    document.querySelector('.cmd[data-cmd_uid=#uid#] .execute').addEventListener('click', function() {
+      jeedom.cmd.execute({ id: '#id#' })
+    })
+
+    jeedom.cmd.addUpdateFunction('#id#', function(_options) {
+      if (is_object(cmd = document.querySelector('.cmd[data-cmd_uid="#uid#"]'))) {
+        if ('#_time_widget_#' == '1' || '#time#' == 'duration' || '#time#' == 'date') {
+          jeedom.cmd.displayDuration(_options.valueDate, cmd.querySelector('.timeCmd'), '#time#')
+        }
+
+        if (_options.display_value >= 1 || _options.display_value == 'on') {
+          cmd.setAttribute('data-state', 1)
+          if (jeedom.cmd.normalizeName('#name#') == 'on') {
+            cmd.unseen()
+          } else {
+            cmd.seen().querySelector('.imgCmd').innerHTML = jeedom.widgets.getThemeImg("#_img_light_on_#", "#_img_dark_on_#")
+          }
+        } else {
+          cmd.setAttribute('data-state', 0)
+          if (jeedom.cmd.normalizeName('#name#') == 'off') {
+            cmd.unseen()
+          } else {
+            cmd.seen().querySelector('.imgCmd').innerHTML = jeedom.widgets.getThemeImg("#_img_light_off_#", "#_img_dark_off_#")
+          }
+        }
+
+        if (is_numeric('#_desktop_width_#') && is_object(img = cmd.querySelector('.imgCmd img'))) {
+          img.style.setProperty('width', '#_desktop_width_#px', 'important')
+        }
+      }
+      document.body.addEventListener('changeThemeEvent', function() {
+        if (is_object(cmd = document.querySelector('.cmd[data-cmd_uid="#uid#"]'))) {
+          if (cmd.getAttribute('data-state') == 1) {
+            cmd.querySelector('.imgCmd').innerHTML = jeedom.widgets.getThemeImg("#_img_light_on_#", "#_img_dark_on_#")
+          } else {
+            cmd.querySelector('.imgCmd').innerHTML = jeedom.widgets.getThemeImg("#_img_light_off_#", "#_img_dark_off_#")
+          }
+
+          if (is_numeric('#_desktop_width_#') && is_object(img = cmd.querySelector('.imgCmd img'))) {
+            img.style.setProperty('width', '#_desktop_width_#px', 'important')
+          }
+        }
+      })
+    })
+
+    jeedom.cmd.refreshValue([{ cmd_id: '#id#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#' }])
+  </script>
+</div>

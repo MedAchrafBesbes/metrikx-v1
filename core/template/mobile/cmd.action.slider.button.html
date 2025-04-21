@@ -1,0 +1,40 @@
+<div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-template="button" data-version="#version#" data-eqLogic_id="#eqLogic_id#" data-cmd_id="#id#" data-cmd_uid="#uid#">
+  <div class="cmdName #hide_name#">#name_display#</div>
+  <div data-role="controlgroup" data-type="horizontal">
+    <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised bt_minus roundedLeft"><i class="fas fa-minus"></i></a>
+    <input type="text" class="in_value" data-mini="true" value="#state# #unite#" data-wrapper-class="controlgroup-textinput ui-btn" disabled/>
+    <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised bt_plus roundedRight"><i class="fa fa-plus"></i></a>
+  </div>
+  <script>
+    $('.cmd[data-cmd_uid=#uid#] .bt_plus').on('click', function () {
+      let max = ('#maxValue#' == '') ?  Number.MAX_VALUE : parseFloat('#maxValue#')
+      let step = (isNaN(parseFloat('#step#'))) ?  0.5 : parseFloat('#step#')
+      if (parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) <= max - step ) {
+        jeedom.cmd.refreshValue([{cmd_id :'#id#',value: parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) + step}])
+        $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change')
+      }
+    })
+
+    $('.cmd[data-cmd_uid=#uid#] .bt_minus').on('click', function () {
+      let min = ('#minValue#' == '') ? Number.MIN_VALUE : parseFloat('#minValue#')
+      let step = (isNaN(parseFloat('#step#'))) ?  0.5 : parseFloat('#step#')
+      if (parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) >= min + step) {
+        jeedom.cmd.refreshValue([{cmd_id :'#id#',value: parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) - step}])
+        $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change')
+      }
+    })
+
+    $('.cmd[data-cmd_uid=#uid#] .in_value').on('change', function () {
+      if (typeof timerHandle#uid# !== 'undefined') {
+        clearTimeout(timerHandle#uid#)
+      }
+      timerHandle#uid# = setTimeout(function() {
+        jeedom.cmd.execute({id:'#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .in_value').val().replace("#unite#", "").replace(" ", "")}})
+      }, 1000)
+    })
+
+    jeedom.cmd.addUpdateFunction('#id#',function(_options) {
+      $('.cmd[data-cmd_uid=#uid#] .in_value').val(_options.value+' #unite#')
+    });
+  </script>
+</div>

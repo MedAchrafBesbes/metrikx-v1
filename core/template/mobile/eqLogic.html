@@ -1,0 +1,38 @@
+<div class="eqLogic eqLogic-widget #class# #category#" data-eqLogic_id="#id#" data-eqType="#eqType#" data-version="#version#" data-eqLogic_uid="#uid#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" style="#style#">
+  <span class="cmd refresh pull-right cursor" data-cmd_id="#refresh_id#">
+    <i class="fas fa-sync"></i>
+  </span>
+  <center>
+    <span class="widget-name">
+      <span class="panelLink pull-left cursor">
+        <a class="link" href="#panelLink#"><i class="fas fa-external-link-alt"></i></a>
+      </span>
+      <span class="warning" title="#alert_name#">
+        <i class='#alert_icon#'></i>
+      </span>
+      <span>#name_display# <span class="object_name">#object_name#</span></span><br/>
+    </span>
+    <div style="padding: 5px;">
+      #cmd#
+    </div>
+  </center>
+  #divGraphInfo#
+  <script>
+    if ('#panelLink#' == '') {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .panelLink').remove()
+    }else{
+      let href = $('.eqLogic[data-eqLogic_uid=#uid#] .panelLink a').attr('href');
+      $('.eqLogic[data-eqLogic_uid=#uid#] .panelLink a').attr('data-page',getUrlVars('p',href));
+      $('.eqLogic[data-eqLogic_uid=#uid#] .panelLink a').attr('data-plugin',getUrlVars('m',href));
+      $('.eqLogic[data-eqLogic_uid=#uid#] .panelLink a').attr('data-title','panel');
+      $('.eqLogic[data-eqLogic_uid=#uid#] .panelLink a').attr('href',null)
+    }
+    if ('#refresh_id#' != '') {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
+        jeedom.cmd.execute({id: '#refresh_id#'})
+      })
+    } else {
+      $('.eqLogic[data-eqLogic_uid=#uid#] .refresh').remove()
+    }
+  </script>
+</div>

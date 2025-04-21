@@ -1,0 +1,75 @@
+<div class="scenario scenario-widget allowResize" data-scenario_id="#id#" data-version="#version#" style="width: #width#;height: #height#;">
+  <center class="widget-name"><a href="#scenarioLink#">#name#</a></center>
+  <div class="#isVerticalAlign#">
+    <center>
+      <div class="iconCmd">#icon#</div>
+      <a class="btn btn-default btn-sm changeScenarioState tooltips" data-state="activate" title="{{Activer}}"><i class="fa fa-power-off"></i></a>
+      <a class="btn btn-default btn-sm changeScenarioState tooltips" data-state="deactivate" title="{{Désactiver}}"><i class="fa fa-power-off"></i></a>
+      <a class="btn btn-default btn-sm changeScenarioState" data-state="start"><i class="fa fa-play"></i></a>
+      <a class="btn btn-default btn-sm changeScenarioState" data-state="stop"><i class="fa fa-stop"></i></a>
+      <a class="btn btn-default btn-sm scenario_ViewLog"><i class="far fa-file"></i></a>
+      <div class="value">
+        <span id="lastLaunch#id#" class="timeCmd label">#lastLaunch#</span>
+      </div>
+    </center>
+  </div>
+  <script>
+    document.querySelectorAll('.scenario[data-scenario_id="#id#"] .changeScenarioState').forEach(
+      _bt => { _bt.addEventListener('click', function(event) {
+        document.querySelector('.scenario[data-scenario_id="#id#"] .iconCmd').innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+        jeedom.scenario.changeState({
+          id: this.closest('.scenario').getAttribute('data-scenario_id'),
+          state: this.getAttribute('data-state'),
+          error: function (error) {
+            jeedomUtils.showAlert({message: error.message, level: 'danger'})
+            document.querySelector('.scenario[data-scenario_id="#id#"] .iconCmd').innerHTML = '<i class="fa fa-times"></i>'
+          }
+        })
+      })
+    })
+
+    document.querySelector('.scenario[data-scenario_id="#id#"] .scenario_ViewLog').addEventListener('click', function (event) {
+      jeeDialog.dialog({
+        id: 'jee_modal2',
+        title: "{{Log d'exécution du scénario}}",
+        contentUrl: 'index.php?v=d&modal=scenario.log.execution&scenario_id=#id#'
+      })
+    })
+
+    jeedom.scenario.update['#id#'] = function(_options) {
+      var scEl = document.querySelector('.scenario[data-scenario_id="#id#"]')
+      if (isset(_options.name)) {
+        scEl.querySelector('.widget-name a').innerHTML = _options.name
+      }
+
+      if (typeof _options.icon != 'undefined' && _options.icon != '') {
+        scEl.querySelector('.iconCmd').innerHTML = _options.icon
+      }
+      scEl.querySelectorAll('.changeScenarioState').unseen()
+      if (!isset(_options.isActive)) {
+        _options.isActive = '#isActive#'
+      }
+      if (!isset(_options.state)) {
+        _options.state = '#state#'
+      }
+      if (typeof _options.isActive == 'undefined' || _options.isActive == '1') {
+        scEl.removeClass('inactive')
+        if (_options.state == 'in progress' || _options.state == 'starting') {
+          scEl.querySelector('.iconCmd').empty().insertAdjacentHTML('beforeend', '<i class="fa fa-spinner fa-spin"></i>')
+          scEl.querySelector('.changeScenarioState[data-state=stop]').seen()
+          scEl.querySelector('.changeScenarioState[data-state=deactivate]').seen()
+        } else {
+          scEl.querySelector('.iconCmd').empty().insertAdjacentHTML('beforeend', '#icon#')
+          scEl.querySelector('.changeScenarioState[data-state=start]').seen()
+          scEl.querySelector('.changeScenarioState[data-state=deactivate]').seen()
+        }
+      } else {
+        scEl.querySelector('.iconCmd').empty().insertAdjacentHTML('beforeend', '#icon#')
+        scEl.querySelector('.changeScenarioState[data-state=activate]').seen()
+        scEl.addClass('inactive')
+      }
+      document.getElementById('lastLaunch#id#').innerHTML = _options.lastLaunch
+    }
+    jeedom.scenario.update['#id#']({isActive: '#isActive#', state: '#state#', lastLaunch: '#lastLaunch#', icon: '#icon#', name: '#name#'})
+  </script>
+</div>

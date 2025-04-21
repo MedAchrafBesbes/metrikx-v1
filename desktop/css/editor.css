@@ -1,0 +1,426 @@
+/*
+Theme ElFinder File Editor 2021 @Jeedom
+*/
+
+/* GLOBAL */
+  [data-page="editor"] #div_mainContainer {
+    overflow: hidden;
+  }
+  [data-page="editor"] #div_pageContainer {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+
+  #elfinder > .ui-icon-gripsmall-diagonal-se {
+    display: none !important;
+  }
+  #elfinder .elfinder-preference-tabs {
+    padding: 10px 24px !important;
+  }
+
+  #elfinder select {
+    background-image: initial !important;
+    background-color: var(--form-bg-color) !important;
+  }
+  #elfinder .ui-tabs-tab .ui-tabs-anchor,
+  #elfinder .ui-tabs-active .ui-tabs-anchor,
+  #elfinder .ui-tabs-anchor:hover {
+    border: none;
+    background-color: var(--form-bg-color) !important;
+  }
+
+/* ____________________Custom functions buttons */
+  #elfinder .elfinder-button-text {
+    cursor: pointer !important;
+    padding: 3px 8px !important;
+    background-color: rgb(221, 221, 221) !important;
+  }
+  #elfinder .elfinder-button-text.btn-success {
+    background-color: var(--al-success-color) !important;
+  }
+  #elfinder .elfinder-button-text.btn-info {
+    background-color: var(--al-info-color) !important;
+  }
+  #elfinder .elfinder-button-text.btn-warning {
+    background-color: var(--al-warning-color) !important;
+  }
+  #elfinder span[class*='elfinder-button-icon-jee_'] {
+    display: none;
+  }
+  #elfinder span[class*='elfinder-button-icon-jee_'] + .elfinder-button-text {
+    color: rgb(50, 50, 58) !important;
+    font-weight: 700;
+    display: unset !important;
+  }
+
+/* ____________________ELFINDER EDITOR */
+  #elfinder .elfinder-toolbar::after {
+    display: none;
+  }
+  #elfinder .elfinder-toolbar {
+    padding-bottom: 10px;
+  }
+  #elfinder .elfinder-toolbar .ui-widget-content.elfinder-button-search {
+    min-width: 220px;
+  }
+  #elfinder .elfinder-toolbar .ui-widget-content.elfinder-button-search > input {
+    color: rgb(225, 225, 225) !important;
+    padding: 0 0 0 24px !important;
+  }
+  #elfinder .elfinder-button-icon,
+  #elfinder .elfinder-dialog .ui-dialog-titlebar .ui-icon,
+  #elfinder .elfinder-path-dir {
+    cursor: pointer !important;
+  }
+
+  #elfinder .elfinder-edit-editor .CodeMirror {
+    font-size: 12px !important;
+  }
+  #elfinder {
+    background-image: none !important;
+    background: none !important;
+  }
+
+  #elfinder .elfinder-dialog.elfinder-to-editing {
+    /* overide z-index! */
+    position: fixed;
+  }
+  #elfinder .elfinder-bottomtray .elfinder-dialog.elfinder-to-editing {
+    position: relative;
+    margin: 2px;
+  }
+
+  #elfinder .elfinder-cwd-file {
+    color: unset;
+  }
+  #elfinder .elfinder-cwd-view-list .elfinder-cwd-filename {
+    font-size: 15px !important;
+  }
+  #elfinder .elfinder .elfinder-navbar {
+   font-size: 0.78em
+  }
+
+  #elfinder .std42-dialog .ui-dialog-content {
+    font-size: inherit;
+  }
+  #elfinder .std42-dialog.elfinder-dialog-error .ui-dialog-content {
+    padding-left: 50px !important;
+  }
+
+  #elfinder .elfinder-bottomtray {
+    padding: 2px 2px 22px 2px;
+    opacity: 0.88;
+  }
+
+  #elfinder .elfinder-bottomtray > .ui-dialog.elfinder-maximized {
+    padding-top: 0 !important;
+  }
+  #elfinder .elfinder-dialog .ui-dialog-buttonset .ui-button-text {
+    font-family: "Roboto";
+    text-transform: capitalize;
+  }
+
+  #elfinder .elfinder-dialog-edit .elfinder-edit-extras select {
+    width: 150px !important;
+  }
+
+  #elfinder .elfinder-contextmenu-item {
+    color: rgb(75, 75, 75) !important;
+    font-size: 14px;
+  }
+  #elfinder .elfinder-cwd-wrapper {
+    color: rgb(115, 115, 115) !important;
+    line-height: 11px !important;
+  }
+
+
+  #elfinder .elfinder-cwd-view-list table {
+    background-color: rgb(75, 75, 75) !important;
+    color: rgb(240, 240, 240);
+  }
+  #elfinder .elfinder-cwd-view-list table tbody.elfinder-cwd-fixheader tr:hover,
+  #elfinder .elfinder-cwd-view-list table tbody.elfinder-cwd-fixheader tr:nth-child(odd):hover,
+  #elfinder .elfinder-cwd-view-list table tbody.elfinder-cwd-fixheader tr:nth-child(even):hover{
+    background-color: rgb(160, 160, 160) !important;
+  }
+
+  #elfinder .elfinder-cwd-view-list table > tbody tr,
+  #elfinder .elfinder-cwd-view-list table:not(.tableCmd) > tbody tr:nth-child(odd),
+  #elfinder .elfinder-cwd-view-list table:not(.tableCmd) > tbody tr:nth-child(even) {
+    background-color: rgb(75, 75, 75) !important;
+  }
+
+  #elfinder .elfinder-cwd-view-list thead .ui-state-active {
+    background: rgb(160, 160, 160);
+  }
+  #elfinder .elfinder-cwd-view-list thead tr > td  {
+    text-align: left;
+  }
+  #elfinder .elfinder-cwd-view-list thead tr > td .ui-icon::before {
+    display: none;
+  }
+
+  #elfinder .elfinder-toolbar > .elfinder-button-search > input {
+    background-color: rgb(75, 75, 75) !important;
+  }
+  #elfinder .elfinder-toolbar > .elfinder-button-search > span.ui-icon {
+    background-image: none !important
+  }
+
+  #elfinder .elfinder-cwd-filename > textarea {
+    font-size: 14px !important;
+  }
+
+  /* overwrite core css */
+  #elfinder .ui-dialog-buttonset .elfinder-dialog-confirm-applyall {
+    margin-bottom: 10px;
+  }
+  #elfinder input[type="checkbox"]::after {
+    display: none;
+  }
+  #elfinder input[type="checkbox"] {
+    height: 10px;
+    width: 10px !important;
+    border: none;
+  }
+  #elfinder input[type="checkbox"]::before {
+    top: 2px;
+    left: 7px;
+  }
+
+
+  #elfinder .elfinder-dialog-edit .CodeMirror pre {
+    background: initial !important;
+  }
+
+  #elfinder .CodeMirror-dialog-top {
+    background-color: rgb(40, 40, 40);
+  }
+
+  #elfinder .elfinder-dialog .ui-helper-clearfix .elfinder-cwd-icon:before,
+  #elfinder .elfinder-dialog .elfinder-dialog-icon-confirm {
+    display: none;
+  }
+
+  #elfinder .ui-dialog.elfinder-maximized {
+    margin-top: 55px !important;
+    max-height: calc(100% - 60px) !important;
+    max-width: 100% !important;
+  }
+  #elfinder .ui-dialog.elfinder-maximized .elfinder-edit-editor {
+    max-width: calc(100% - 12px) !important;
+  }
+  #elfinder .ui-dialog.elfinder-maximized .ui-resizable-handle {
+    display: none !important;
+  }
+
+  #elfinder .std42-dialog.elfinder-dialog-minimized .ui-dialog-titlebar {
+    line-height: 10px;
+  }
+
+  #elfinder .elfinder-navbar-wrapper {
+    line-height: 10px !important;
+    font-size: 15px;
+  }
+
+  #elfinder .ui-dialog-titlebar .elfinder-titlebar-button-right {
+    opacity: 1 !important;
+  }
+
+  #elfinder .std42-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close:hover .ui-icon,
+  #elfinder .std42-dialog .ui-dialog-titlebar .elfinder-titlebar-full:hover .ui-icon,
+  #elfinder .std42-dialog .ui-dialog-titlebar .elfinder-titlebar-minimize:hover .ui-icon {
+    background-color: unset;
+    font-weight: bold;
+  }
+
+  #elfinder .elfinder-dialog .CodeMirror-gutter,
+  #elfinder .elfinder-dialog .CodeMirror-gutters,
+  #elfinder .elfinder-dialog .CodeMirror-linenumber,
+  #elfinder .elfinder-dialog .CodeMirror-foldgutter-open {
+    background: rgb(70,70,70) !important;
+  }
+
+  #elfinder .elfinder-button-sort-menu,
+  #elfinder .elfinder-button-menu-item {
+    background-color: rgb(255,255,255) !important;
+  }
+
+  #elfinder .elfinder-dialog .ui-dialog-titlebar {
+    vertical-align: middle;
+    background-color: rgb(85,85,85) !important;
+  }
+  #elfinder .elfinder-dialog .elfinder-dialog-title {
+    font-family: "Roboto";
+    font-size: 14px;
+    font-weight: normal !important;
+    padding: 5px;
+    color: rgb(225,225,225) !important;
+    font-weight: bold;
+  }
+  #elfinder .elfinder-dialog .elfinder-dialog-title:before {
+    content: "> "
+  }
+  #elfinder .elfinder-dialog .ui-icon {
+    width: 16px;
+    background-image: none !important;
+    text-indent: 0 !important;
+    margin: 2px 0 !important;
+  }
+
+  /* CodeMirror */
+  [data-page="editor"] .CodeMirror-code { background: rgb(35,35,35) !important; }
+  [data-page="editor"] .CodeMirror-selected { background: rgba(65,65,65,1) !important; }
+
+  [data-page="editor"] .CodeMirror-foldmarker {
+    color: green;
+    text-shadow: none;
+    font-family: arial;
+    line-height: .3;
+    font-size: 18px;
+    position:relative;
+    top: 1px;
+    cursor: pointer !important;
+  }
+
+  [data-page="editor"] #elfinder .CodeMirror-foldgutter-open,
+  [data-page="editor"] #elfinder .CodeMirror-foldgutter-folded {
+    cursor: pointer;
+    transform: scale(2) translate(1px,0) !important;
+    background: transparent !important;
+  }
+
+  [data-page="editor"] .CodeMirror-lines {
+    border-top: 4px solid rgb(35,35,35) !important;
+    padding: 0;
+  }
+
+  /* Old Core jQuery */
+  .ui-dialog #div_graph {
+    height: unset;
+  }
+
+  #md_modal {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    width: calc(100% - 30px) !important;
+  }
+  #div_confPlugin {
+    height: auto !important;
+  }
+
+  .ui-widget {
+    font-size: 14px;
+  }
+
+  .ui-dialog-buttonpane .ui-dialog-buttonset .ui-button {
+    color: var(--linkHoverLight-color) !important;
+    background-color: var(--al-success-color)!important;
+    border: none!important;
+  }
+  .ui-dialog-buttonpane .ui-dialog-buttonset .ui-button:first-child {
+    background-color: var(--al-warning-color)!important;
+  }
+
+  .ui-dialog {
+    background-color: rgb(var(--defaultBkg-color));
+    box-shadow: 0 0 6px 2px rgba(0,0,0,0.15) !important;
+  }
+  .ui-dialog .ui-dialog-titlebar {
+    border-bottom: none !important;
+    background-color: rgb(var(--contrast-color)) !important;
+    padding: 0 5px;
+  }
+  .ui-dialog .ui-dialog-title {
+    color: rgb(var(--bg-color)) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    font-size: 16px;
+    font-weight: normal;
+    cursor: move !important;
+  }
+  .ui-dialog .ui-dialog-title:before {
+    content: '\f105\00a0\00a0';
+    font-family: "Font Awesome 5 Free";
+    font-weight: 700;
+  }
+
+  .ui-dialog, .ui-dialog-content {
+    box-sizing: content-box !important;
+  }
+
+  .ui-state-active .ui-icon,
+  .ui-widget-header .ui-icon {
+    background-image: var(--url-iconsDark)!important;
+  }
+  .ui-dialog-content {
+    padding: 13px !important;
+    padding-right: 13px !important;
+  }
+  .ui-dialog-content > div:not(.alert):not(.jqAlert) {
+    background: transparent !important;
+  }
+  .ui-widget-content:not(.slider){
+    color: var(--txt-color) !important;
+    background: transparent !important;
+    border: none!important;
+  }
+  .jqAlert {
+    padding: 5px 30px;
+    margin-bottom: 5px;
+  }
+
+  .ui-dialog .ui-dialog-buttonpane {
+    margin: 0;
+  }
+  .ui-dialog .ui-dialog-content,
+  .ui-dialog .ui-dialog-buttonpane {
+    background-color: var(--bg-modal-color) !important;
+  }
+
+  .ui-resizable-handle.ui-icon {
+    background-image: none !important;
+    background-color: transparent !important;
+  }
+  .ui-button:hover {
+    opacity: 0.65;
+  }
+
+  button.ui-dialog-titlebar-close::before {
+    font-family: "Font Awesome 5 Free";
+    font-size: 16px !important;
+    font-weight: 700;
+    content: "\f00d";
+    color: rgb(var(--bg-color)) !important;
+    padding-right: 12px;
+    line-height: 10px;
+    vertical-align: top;
+  }
+  button.ui-dialog-titlebar-close {
+    position: absolute;
+    top: 30px !important;
+    font-size: 14px !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+  }
+  button.ui-dialog-titlebar-close:hover {
+    opacity: 0.75 !important;
+  }
+  .ui-dialog:not(.elfinder-dialog) .ui-icon-closethick {
+    display:none !important;
+  }
+
+  .ui-dialog {
+    border-radius: var(--border-radius) !important;
+  }
+  .ui-dialog-titlebar {
+    border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+  }
+
+  .ui-dialog .ui-resizable-se {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    right: 3px;
+    bottom: 3px;
+  }
