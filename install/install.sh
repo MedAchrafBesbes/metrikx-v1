@@ -147,7 +147,7 @@ step_6_jeedom_download() {
   echo "${YELLOW}Starting step 6 - download Jeedom${NORMAL}"
   GITHUB_TOKEN="ghp_Ne0mCoopKYBBnORhRUzm""UjNdGsvn701Nlp3q"
 
-  wget --header="Authorization: token $GITHUB_TOKEN" https://github.com/MedAchrafBesbes/metrikx/archive/refs/heads/master.zip -O /tmp/jeedom.zip
+  wget --header="Authorization: token $GITHUB_TOKEN" https://github.com/MedAchrafBesbes/metrikx-v1/archive/refs/heads/master.zip -O /tmp/jeedom.zip
   
   if [ $? -ne 0 ]; then
     echo "${YELLOW}Cannot download Jeedom from Github. Use deployment version if exist.${NORMAL}"
